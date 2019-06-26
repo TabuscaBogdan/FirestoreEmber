@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29009.5
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FirestoreEmber", "FirestoreEmber\FirestoreEmber.csproj", "{4DFAB75E-9837-4161-AC0B-BEF210D5AFD8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmberTest", "EmberTest\EmberTest.csproj", "{1C8E09DC-A58C-4CA5-BD2F-5097D5D8EA52}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4DFAB75E-9837-4161-AC0B-BEF210D5AFD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DFAB75E-9837-4161-AC0B-BEF210D5AFD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DFAB75E-9837-4161-AC0B-BEF210D5AFD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DFAB75E-9837-4161-AC0B-BEF210D5AFD8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C8E09DC-A58C-4CA5-BD2F-5097D5D8EA52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C8E09DC-A58C-4CA5-BD2F-5097D5D8EA52}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C8E09DC-A58C-4CA5-BD2F-5097D5D8EA52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C8E09DC-A58C-4CA5-BD2F-5097D5D8EA52}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {6D934FAE-C72E-493F-91B3-9E466E530754}
+	EndGlobalSection
+EndGlobal
