@@ -19,6 +19,8 @@ namespace FirestoreEmber
 
         private ISelectionGateway selectionGateway;
         private IInsertionGateway insertionGateway;
+        private IActualtizationGateway actualtizationGateway;
+        private IDeletionGateway deletionGateway;
 
         public EmberDatabase(string projectId, string credentialsFilePath)
         {
@@ -44,6 +46,11 @@ namespace FirestoreEmber
         {
             var result = await selectionGateway.ReadDocuments(collectionPath);
             return result;
+        }
+
+        public async Task CreateDocumentBatch(Dictionary<string, Dictionary<string, Dictionary<string, object>>> collectionDocumentData)
+        {
+            await insertionGateway.CreateDocumentBatch(collectionDocumentData);
         }
     }
 }
