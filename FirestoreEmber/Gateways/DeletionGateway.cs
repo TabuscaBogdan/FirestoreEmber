@@ -52,15 +52,16 @@ namespace FirestoreEmber.Gateways
             }
         }
 
-        public async Task CreateDocumentBatch(Dictionary<string, string> collectionDocument)
+        public async Task DeleteDocumentBatch(Dictionary<string, List<string>> collectionDocuments)
         {
             WriteBatch batch = database.StartBatch();
             short operations = 0;
 
-            foreach (var collectionKey in collectionDocument.Keys)
+            foreach (var collectionKey in collectionDocuments.Keys)
             {
-
-                    var docRef = database.Collection(collectionKey).Document(collectionDocument[collectionKey]);
+                foreach (var document in collectionDocuments[collectionKey])
+                {
+                    var docRef = database.Collection(collectionKey).Document(document);
                     batch.Delete(docRef);
                     operations++;
 
@@ -69,6 +70,8 @@ namespace FirestoreEmber.Gateways
                         throw new EmberBatchException("Number of set operation exceeded " +
                                                       "the batch's 500 operation limit.");
                     }
+                }
+
             }
 
             await batch.CommitAsync();

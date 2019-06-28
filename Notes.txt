@@ -1,0 +1,15 @@
+Data Structure:
+ -structured in collection -> document(json) -><collectionReference>-> subcollection -> document(json) -> etc...
+ -collection names and document names must be unique
+ 
+Restrictions:
+ -documents cannot exceed 1MB of memory
+ -takes a long time to update the same document contineusly (up to 1 second)
+ -up to 32 levels of depth in documents
+ -size of batched operations cannot exceed 500 at once.
+ 
+Recomandations:
+ -collections should have many small documents
+ -do not go too deep
+ -watch out when deleting documents with references
+ 

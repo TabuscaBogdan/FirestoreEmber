@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FirestoreEmber.Exceptions;
+using FirestoreEmber.IGateways;
 using Google.Cloud.Firestore;
 
 namespace FirestoreEmber.Gateways
 {
-    public class ActualizationGateway
+    public class ActualizationGateway : IActualtizationGateway
     {
         private readonly FirestoreDb database;
 

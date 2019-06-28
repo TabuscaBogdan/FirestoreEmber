@@ -35,22 +35,144 @@ namespace FirestoreEmber
 
             selectionGateway = new SelectionGateway(database);
             insertionGateway = new InsertionGateway(database);
+            actualtizationGateway = new ActualizationGateway(database);
+            deletionGateway = new DeletionGateway(database);
         }
 
+        /// <summary>
+        /// Get a reference to the FirestoreDb.
+        /// </summary>
+        /// <returns></returns>
+        public FirestoreDb GetDatabaseReference()
+        {
+            return database;
+        }
+
+        /// <summary>
+        ///  Creates a document in the specified collection with the given data.
+        /// </summary>
+        /// <param name="collectionPath">A string containing the path and collection Name</param>
+        /// <param name="documentName">A string representing the document's name</param>
+        /// <param name="data">Data to be placed in the created document (cannot be null)</param>
+        /// <returns></returns>
         public async Task CreateDocument(string collectionPath, string documentName, Dictionary<string, object> data)
         {
             await insertionGateway.CreateDocument(collectionPath, documentName, data);
         }
-
-        public async Task<List<Dictionary<string, object>>> ReadDocuments(string collectionPath)
-        {
-            var result = await selectionGateway.ReadDocuments(collectionPath);
-            return result;
-        }
-
+        /// <summary>
+        /// Allows the creation of multiple documents in multiple collections at once.
+        /// Batch["Collection"]["DocumentName"]["DataField"]
+        /// </summary>
+        /// <param name="collectionDocumentData">Object that specifies the collection, the document name and the data it should contain.</param>
+        /// <returns></returns>
         public async Task CreateDocumentBatch(Dictionary<string, Dictionary<string, Dictionary<string, object>>> collectionDocumentData)
         {
             await insertionGateway.CreateDocumentBatch(collectionDocumentData);
+        }
+
+        /// <summary>
+        /// Creates a document in the specified collection with the given data.
+        /// Returns the generated document's name.
+        /// </summary>
+        /// <param name="collectionPath">A string containing the path and collection Name</param>
+        /// <param name="data">Data to be placed in the created document (cannot be null)</param>
+        /// <returns>The generated document's name.</returns>
+        public Task<string> CreateAnonymousDocument(string collectionPath, Dictionary<string, object> data)
+        {
+            var documentId = insertionGateway.CreateAnonymousDocument(collectionPath, data);
+            return documentId;
+        }
+
+        /// <summary>
+        /// Attempt to read the specified document. Returns an empty dictionary if inexistent.
+        /// </summary>
+        /// <param name="collectionPath">A string containing the path and collection Name</param>
+        /// <param name="documentName">A string representing the document's name</param>
+        /// <returns></returns>
+        public async Task<Dictionary<string, object>> GetDocument(string collectionPath, string documentName)
+        {
+            var result = await selectionGateway.GetDocument(collectionPath, documentName);
+            return result;
+        }
+        /// <summary>
+        /// Gets all the documents in the specified collection.
+        /// Possible out of memory exception for large collections.
+        /// </summary>
+        /// <param name="collectionPath">A string containing the path and collection name.</param>
+        /// <returns></returns>
+        public async Task<List<Dictionary<string, object>>> GetDocuments(string collectionPath)
+        {
+            var result = await selectionGateway.GetDocuments(collectionPath);
+            return result;
+        }
+
+        /// <summary>
+        /// Gets the references of all the subcollections in the specified document.
+        /// </summary>
+        /// <param name="collectionPath">A string containing the path and collection name.</param>
+        /// <param name="documentName">A string representing the document's name.</param>
+        /// <returns></returns>
+        public async Task<IList<CollectionReference>> GetDocumentSubcollections(string collectionPath,
+            string documentName)
+        {
+            var result = await selectionGateway.GetDocumentSubcollections(collectionPath, documentName);
+            return result;
+        }
+
+        public async Task UpdateDocument(string collectionPath, string documentName, Dictionary<string, object> data)
+        {
+            await actualtizationGateway.UpdateDocument(collectionPath, documentName, data);
+        }
+
+        public async Task UpdateDocumentWithTimestamp(string collectionPath, string documentName,
+            Dictionary<string, object> data)
+        {
+            await actualtizationGateway.UpdateDocumentWithTimestamp(collectionPath, documentName, data);
+        }
+
+        public async Task UpdateDocumentBatch(
+            Dictionary<string, Dictionary<string, Dictionary<string, object>>> collectionDocumentData)
+        {
+            await actualtizationGateway.UpdateDocumentBatch(collectionDocumentData);
+        }
+
+        /// <summary>
+        /// Deletes the specified document.
+        /// </summary>
+        /// <param name="collectionPath">A string containing the path and collection name.</param>
+        /// <param name="documentName">A string representing the document's name.</param>
+        /// <returns></returns>
+        public async Task DeleteDocument(string collectionPath, string documentName)
+        {
+            await deletionGateway.DeleteDocument(collectionPath, documentName);
+        }
+
+        /// <summary>
+        /// Deletes the specified fields inside a document.
+        /// </summary>
+        /// <param name="collectionPath">A string containing the path and collection name.</param>
+        /// <param name="documentName">A string representing the document's name.</param>
+        /// <param name="fields">A list of fields to be deleted.</param>
+        /// <returns></returns>
+        public async Task DeleteDocumentFields(string collectionPath, string documentName, List<string> fields)
+        {
+            await deletionGateway.DeleteDocumentFields(collectionPath, documentName, fields);
+        }
+
+        /// <summary>
+        /// Deletes all the documents inside that collections, but it will not delete subcollections.
+        /// </summary>
+        /// <param name="collectionPath"></param>
+        /// <param name="batchSize"></param>
+        /// <returns></returns>
+        public async Task DeleteCollection(string collectionPath, int batchSize = 1000)
+        {
+            await deletionGateway.DeleteCollection(collectionPath, batchSize);
+        }
+
+        public async Task DeleteDocumentBatch(Dictionary<string, List<string>> collectionDocuments)
+        {
+            await deletionGateway.DeleteDocumentBatch(collectionDocuments);
         }
     }
 }

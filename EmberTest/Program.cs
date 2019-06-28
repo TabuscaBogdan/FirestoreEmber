@@ -13,6 +13,8 @@ namespace EmberTest
                 "C:\\Database\\FireMine-7b7740133042.json");
 
             
+            //batch document creation
+            /*
             var data1 = new Dictionary<string, object>();
             data1["Daisy"] = 500;
             data1["Bloom"] = 38;
@@ -40,8 +42,62 @@ namespace EmberTest
             bigBatch["Plants"] = col1;
 
             await database.CreateDocumentBatch(bigBatch);
+            */
 
 
+            //Add anonymus document
+            /*
+            var anonymusData = new Dictionary<string, object>();
+            anonymusData["Grass"] = "A lot of grass";
+            anonymusData["Moss"] = 3000;
+
+            string id = await database.CreateAnonymousDocument("Plants", anonymusData);
+            Console.WriteLine(id);
+            */
+
+            //Delete fields
+            /*
+            var fieldList = new List<string>();
+            fieldList.Add("StrawberryCream");
+            await database.DeleteDocumentFields("Fruits/Berries/Treats", "Creams", fieldList);
+            */
+            //delete collection
+            //var data = await database.ReadDocuments("Fruits");
+            /*await database.DeleteCollection("Fruits");
+            var docToDel = new Dictionary<string,List<string>>();
+            docToDel["users"] = new List<string>();
+            docToDel["users"].Add("Timmy");
+            docToDel["users"].Add("Jimmy");
+            //await database.DeleteDocumentBatch(docToDel);
+            */
+            
+            //update collection
+            var otherShips = new Dictionary<string,object>();
+            otherShips["Fregate"] = 500;
+            otherShips["Line Ship"] = false;
+
+            var otherPlants = new Dictionary<string,object>();
+            otherPlants["Acacia"] = "Are semi bushes that grow on arrid conditions";
+            otherPlants["Merucia"] = "A type of soft bush";
+
+            var morePlants = new Dictionary<string,object>();
+            morePlants["Daybloom"] = " A cute flower the blooms at dawn";
+            morePlants["Lily"] = "A flower that made men rich";
+
+            var docUpdateBoats= new Dictionary<string, Dictionary<string,object>>();
+            docUpdateBoats["Ships"] = otherShips;
+
+            
+            var docUpdatePlants = new Dictionary<string, Dictionary<string,object>>();
+            docUpdatePlants["Bushes"] = otherPlants;
+            docUpdatePlants["Flowers"] = morePlants;
+
+            var batch = new Dictionary<string,Dictionary<string,Dictionary<string,object>>>();
+            batch["Plants"] = docUpdatePlants;
+            batch["Boats"] = docUpdateBoats;
+
+            await database.UpdateDocumentBatch(batch);
+            //await database.UpdateDocument("Boats", "Ships", otherShips);
             //var data = await database.ReadDocuments("Fruits");
             //Console.WriteLine(data[0]);
         }

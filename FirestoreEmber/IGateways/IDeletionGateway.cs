@@ -14,6 +14,6 @@ namespace FirestoreEmber.IGateways
 
         Task DeleteCollection(string collectionPath, int batchSize = 1000);
 
-        Task CreateDocumentBatch(Dictionary<string, string> collectionDocument);
+        Task DeleteDocumentBatch(Dictionary<string, List<string>> collectionDocuments);
     }
 }

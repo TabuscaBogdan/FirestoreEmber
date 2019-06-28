@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FirestoreEmber.IGateways;
@@ -17,7 +18,21 @@ namespace FirestoreEmber.Gateways
             this.database = database;
         }
 
-        public async Task<List<Dictionary<string, object>>> ReadDocuments(string collectionPath)
+        public async Task<Dictionary<string, object>> GetDocument(string collectionPath, string documentName)
+        {
+            DocumentReference documentReference = database.Collection(collectionPath).Document(documentName);
+            DocumentSnapshot snapshot = await documentReference.GetSnapshotAsync();
+
+            if (snapshot.Exists)
+            {
+                Dictionary<string, object> document = snapshot.ToDictionary();
+                return document;
+            }
+            
+            return new Dictionary<string, object>();
+        }
+
+        public async Task<List<Dictionary<string, object>>> GetDocuments(string collectionPath)
         {
             CollectionReference collectionReference = database.Collection(collectionPath);
             QuerySnapshot snapshot = await collectionReference.GetSnapshotAsync();
@@ -31,5 +46,14 @@ namespace FirestoreEmber.Gateways
 
             return documentsList;
         }
+
+        public async Task<IList<CollectionReference>> GetDocumentSubcollections(string collectionPath, string documentName)
+        {
+            DocumentReference documentReference = database.Collection(collectionPath).Document(documentName);
+            IList<CollectionReference> subcollections = await documentReference.ListCollectionsAsync().ToList();
+
+            return subcollections;
+        }
+
     }
 }
