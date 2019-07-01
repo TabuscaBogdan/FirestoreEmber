@@ -119,16 +119,38 @@ namespace FirestoreEmber
             return result;
         }
 
+        /// <summary>
+        /// Updates the document in the given path. Merges fields.
+        /// </summary>
+        /// <param name="collectionPath">A string containing the path and collection name.</param>
+        /// <param name="documentName">A string representing the document's name.</param>
+        /// <param name="data">Update data.</param>
+        /// <returns></returns>
         public async Task UpdateDocument(string collectionPath, string documentName, Dictionary<string, object> data)
         {
             await actualtizationGateway.UpdateDocument(collectionPath, documentName, data);
         }
 
+        /// <summary>
+        /// Updates the document in the given path and adds an additional "Timestamp" field with the server
+        /// update time.
+        /// </summary>
+        /// <param name="collectionPath">A string containing the path and collection name.</param>
+        /// <param name="documentName">A string representing the document's name.</param>
+        /// <param name="data">Update data.</param>
+        /// <returns></returns>
         public async Task UpdateDocumentWithTimestamp(string collectionPath, string documentName,
             Dictionary<string, object> data)
         {
             await actualtizationGateway.UpdateDocumentWithTimestamp(collectionPath, documentName, data);
         }
+
+        /// <summary>
+        /// Allows the actualization of multiple documents in multiple collections at once.
+        /// Batch["Collection"]["DocumentName"]["DataField"]
+        /// </summary>
+        /// <param name="collectionDocumentData"></param>
+        /// <returns></returns>
 
         public async Task UpdateDocumentBatch(
             Dictionary<string, Dictionary<string, Dictionary<string, object>>> collectionDocumentData)
@@ -170,6 +192,12 @@ namespace FirestoreEmber
             await deletionGateway.DeleteCollection(collectionPath, batchSize);
         }
 
+        /// <summary>
+        /// Allows the deletion of multiple documents in multiple collections at once.
+        /// Collection with List of documents to be deleted.
+        /// </summary>
+        /// <param name="collectionDocuments"></param>
+        /// <returns></returns>
         public async Task DeleteDocumentBatch(Dictionary<string, List<string>> collectionDocuments)
         {
             await deletionGateway.DeleteDocumentBatch(collectionDocuments);

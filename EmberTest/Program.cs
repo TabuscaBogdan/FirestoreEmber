@@ -96,8 +96,12 @@ namespace EmberTest
             batch["Plants"] = docUpdatePlants;
             batch["Boats"] = docUpdateBoats;
 
-            await database.UpdateDocumentBatch(batch);
+            //await database.UpdateDocumentBatch(batch);
             //await database.UpdateDocument("Boats", "Ships", otherShips);
+            var timePlants = new Dictionary<string,object>();
+            timePlants["Sunflower"] = 80;
+            await database.UpdateDocumentWithTimestamp("Plants", "Flowers", timePlants);
+
             //var data = await database.ReadDocuments("Fruits");
             //Console.WriteLine(data[0]);
         }
